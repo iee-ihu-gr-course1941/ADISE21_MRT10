@@ -16,71 +16,48 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `city`
+-- Table structure for table `game_status`
 --
 
-DROP TABLE IF EXISTS `city`;
+DROP TABLE IF EXISTS `game_status`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `city` (
-  `cityID` int(11) DEFAULT NULL,
-  `Namecity` varchar(255) DEFAULT NULL
+CREATE TABLE `game_status` (
+  `gstatus` int(11) DEFAULT NULL,
+  `pturn` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `city`
+-- Dumping data for table `game_status`
 --
 
-LOCK TABLES `city` WRITE;
-/*!40000 ALTER TABLE `city` DISABLE KEYS */;
-/*!40000 ALTER TABLE `city` ENABLE KEYS */;
+LOCK TABLES `game_status` WRITE;
+/*!40000 ALTER TABLE `game_status` DISABLE KEYS */;
+/*!40000 ALTER TABLE `game_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `persons`
+-- Table structure for table `player`
 --
 
-DROP TABLE IF EXISTS `persons`;
+DROP TABLE IF EXISTS `player`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `persons` (
-  `PersonID` int(11) DEFAULT NULL,
+CREATE TABLE `player` (
+  `PlayerID` int(11) DEFAULT NULL,
   `LastName` varchar(255) DEFAULT NULL,
-  `FirstName` varchar(255) DEFAULT NULL,
-  `Address` varchar(255) DEFAULT NULL,
-  `City` varchar(255) DEFAULT NULL
+  `FirstName` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `persons`
+-- Dumping data for table `player`
 --
 
-LOCK TABLES `persons` WRITE;
-/*!40000 ALTER TABLE `persons` DISABLE KEYS */;
-/*!40000 ALTER TABLE `persons` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `town`
---
-
-DROP TABLE IF EXISTS `town`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `town` (
-  `townid` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `town`
---
-
-LOCK TABLES `town` WRITE;
-/*!40000 ALTER TABLE `town` DISABLE KEYS */;
-/*!40000 ALTER TABLE `town` ENABLE KEYS */;
+LOCK TABLES `player` WRITE;
+/*!40000 ALTER TABLE `player` DISABLE KEYS */;
+/*!40000 ALTER TABLE `player` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -96,4 +73,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-06 18:13:11
+-- Dump completed on 2022-01-06 21:30:37
