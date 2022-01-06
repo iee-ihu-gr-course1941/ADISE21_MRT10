@@ -63,6 +63,27 @@ LOCK TABLES `persons` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `town`
+--
+
+DROP TABLE IF EXISTS `town`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `town` (
+  `townid` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `town`
+--
+
+LOCK TABLES `town` WRITE;
+/*!40000 ALTER TABLE `town` DISABLE KEYS */;
+/*!40000 ALTER TABLE `town` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping routines for database 'test_moutzouris'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -75,4 +96,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-06 16:58:01
+-- Dump completed on 2022-01-06 18:13:11
