@@ -46,8 +46,8 @@ DROP TABLE IF EXISTS `game_status`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `game_status` (
   `status` enum('not active','initialized','started','ended','aborded') NOT NULL DEFAULT 'not active',
-  `p_turn` enum('W','B') DEFAULT NULL,
-  `result` enum('B','W','D') DEFAULT NULL,
+  `p_turn` enum('P1','P2') DEFAULT NULL,
+  `result` enum('P1','P2') DEFAULT NULL,
   `last_change` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -94,4 +94,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-08 22:53:21
+-- Dump completed on 2022-01-08 22:58:12
