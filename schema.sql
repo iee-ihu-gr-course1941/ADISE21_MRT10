@@ -1,6 +1,6 @@
 -- MariaDB dump 10.19  Distrib 10.4.22-MariaDB, for Win64 (AMD64)
 --
--- Host: localhost    Database: test_moutzouris
+-- Host: localhost    Database: moutzouris
 -- ------------------------------------------------------
 -- Server version	10.4.22-MariaDB
 
@@ -16,26 +16,25 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `city`
+-- Table structure for table `deck`
 --
 
-DROP TABLE IF EXISTS `city`;
+DROP TABLE IF EXISTS `deck`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `city` (
-  `cityID` int(11) DEFAULT NULL,
-  `C_Name` varchar(255) DEFAULT NULL
+CREATE TABLE `deck` (
+  `Numcard` tinyint(2) NOT NULL,
+  `Symbcard` varchar(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `city`
+-- Dumping data for table `deck`
 --
 
-LOCK TABLES `city` WRITE;
-/*!40000 ALTER TABLE `city` DISABLE KEYS */;
-INSERT INTO `city` VALUES (11,'vieni'),(13,'athina'),(44,'tinos');
-/*!40000 ALTER TABLE `city` ENABLE KEYS */;
+LOCK TABLES `deck` WRITE;
+/*!40000 ALTER TABLE `deck` DISABLE KEYS */;
+/*!40000 ALTER TABLE `deck` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -46,8 +45,10 @@ DROP TABLE IF EXISTS `game_status`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `game_status` (
-  `gstatus` int(11) DEFAULT NULL,
-  `pturn` varchar(255) DEFAULT NULL
+  `status` enum('not active','initialized','started','ended','aborded') NOT NULL DEFAULT 'not active',
+  `p_turn` enum('W','B') DEFAULT NULL,
+  `result` enum('B','W','D') DEFAULT NULL,
+  `last_change` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -57,32 +58,31 @@ CREATE TABLE `game_status` (
 
 LOCK TABLES `game_status` WRITE;
 /*!40000 ALTER TABLE `game_status` DISABLE KEYS */;
-INSERT INTO `game_status` VALUES (22,'prwtos'),(34,'deuteros'),(55,'prwtos');
 /*!40000 ALTER TABLE `game_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `player`
+-- Table structure for table `players`
 --
 
-DROP TABLE IF EXISTS `player`;
+DROP TABLE IF EXISTS `players`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `player` (
-  `PlayerID` int(11) DEFAULT NULL,
-  `LastName` varchar(255) DEFAULT NULL,
-  `FirstName` varchar(255) DEFAULT NULL
+CREATE TABLE `players` (
+  `playerId` varchar(20) NOT NULL,
+  `token` varchar(100) DEFAULT NULL,
+  `last_action` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`playerId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `player`
+-- Dumping data for table `players`
 --
 
-LOCK TABLES `player` WRITE;
-/*!40000 ALTER TABLE `player` DISABLE KEYS */;
-INSERT INTO `player` VALUES (91,'mour','vas'),(92,'mour','ior'),(91,'savv','kons');
-/*!40000 ALTER TABLE `player` ENABLE KEYS */;
+LOCK TABLES `players` WRITE;
+/*!40000 ALTER TABLE `players` DISABLE KEYS */;
+/*!40000 ALTER TABLE `players` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -94,4 +94,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-07  1:32:24
+-- Dump completed on 2022-01-08 22:53:21
