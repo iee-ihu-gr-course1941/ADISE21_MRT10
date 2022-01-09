@@ -16,50 +16,52 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `deck`
+-- Table structure for table `deck_board`
 --
 
-DROP TABLE IF EXISTS `deck`;
+DROP TABLE IF EXISTS `deck_board`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `deck` (
-  `Numcard` tinyint(2) NOT NULL,
-  `Symbcard` varchar(1) NOT NULL,
-  `Player` varchar(2) NOT NULL
+CREATE TABLE `deck_board` (
+  `numcard` enum('1','2','3','4','5','6','7','8','9','10','K') NOT NULL,
+  `symbcard` enum('H','D','C','S') NOT NULL,
+  `idcard` int(2) DEFAULT NULL,
+  `player` enum('P1','P2') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `deck`
+-- Dumping data for table `deck_board`
 --
 
-LOCK TABLES `deck` WRITE;
-/*!40000 ALTER TABLE `deck` DISABLE KEYS */;
-INSERT INTO `deck` VALUES (1,'C',''),(2,'C',''),(3,'C',''),(4,'C',''),(5,'C',''),(6,'C',''),(7,'C',''),(8,'C',''),(9,'C',''),(10,'C',''),(13,'C',''),(1,'S',''),(2,'S',''),(3,'S',''),(4,'S',''),(5,'S',''),(6,'S',''),(7,'S',''),(8,'S',''),(9,'S',''),(10,'S',''),(1,'H',''),(2,'H',''),(3,'H',''),(4,'H',''),(5,'H',''),(6,'H',''),(7,'H',''),(8,'H',''),(9,'H',''),(10,'H',''),(1,'D',''),(2,'D',''),(3,'D',''),(4,'D',''),(5,'D',''),(6,'D',''),(7,'D',''),(8,'D',''),(9,'D',''),(10,'D','');
-/*!40000 ALTER TABLE `deck` ENABLE KEYS */;
+LOCK TABLES `deck_board` WRITE;
+/*!40000 ALTER TABLE `deck_board` DISABLE KEYS */;
+/*!40000 ALTER TABLE `deck_board` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `deck_field`
+-- Table structure for table `deck_start`
 --
 
-DROP TABLE IF EXISTS `deck_field`;
+DROP TABLE IF EXISTS `deck_start`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `deck_field` (
-  `Numcard` tinyint(2) NOT NULL,
-  `Symbcard` varchar(1) NOT NULL,
-  `Player` varchar(2) NOT NULL
+CREATE TABLE `deck_start` (
+  `numcard` enum('1','2','3','4','5','6','7','8','9','10','K') NOT NULL,
+  `symbcard` enum('H','D','C','S') NOT NULL,
+  `idcard` int(2) DEFAULT NULL,
+  `player` enum('P1','P2') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `deck_field`
+-- Dumping data for table `deck_start`
 --
 
-LOCK TABLES `deck_field` WRITE;
-/*!40000 ALTER TABLE `deck_field` DISABLE KEYS */;
-/*!40000 ALTER TABLE `deck_field` ENABLE KEYS */;
+LOCK TABLES `deck_start` WRITE;
+/*!40000 ALTER TABLE `deck_start` DISABLE KEYS */;
+INSERT INTO `deck_start` VALUES ('1','C',1,'P1'),('2','C',2,'P1'),('3','C',3,'P1'),('4','C',4,'P1'),('5','C',5,'P1'),('6','C',6,'P1'),('7','C',7,'P1'),('8','C',8,'P1'),('9','C',9,'P1'),('10','C',10,'P1'),('K','C',11,'P1'),('1','S',12,'P1'),('2','S',13,'P1'),('3','S',14,'P1'),('4','S',15,'P1'),('5','S',16,'P1'),('6','S',17,'P1'),('7','S',18,'P1'),('8','S',19,'P1'),('9','S',20,'P1'),('10','S',21,'P2'),('1','H',22,'P2'),('2','H',23,'P2'),('3','H',24,'P2'),('4','H',25,'P2'),('5','H',26,'P2'),('6','H',27,'P2'),('7','H',28,'P2'),('8','H',29,'P2'),('9','H',30,'P2'),('10','H',31,'P2'),('1','D',32,'P2'),('2','D',33,'P2'),('3','D',34,'P2'),('4','D',35,'P2'),('5','D',36,'P2'),('6','D',37,'P2'),('7','D',38,'P2'),('8','D',39,'P2'),('9','D',40,'P2'),('10','D',41,'P1');
+/*!40000 ALTER TABLE `deck_start` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -126,9 +128,9 @@ UNLOCK TABLES;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `assign_cards_toplayers`()
 BEGIN
-REPLACE INTO deck_field SELECT * FROM deck ORDER BY RAND();
-UPDATE deck_field SET Player='P1' ;
-UPDATE deck_field SET Player='P2' limit 21;
+REPLACE INTO deck_board SELECT * FROM deck_start ORDER BY RAND();
+UPDATE deck_board SET player='P1' ;
+UPDATE deck_board SET player='P2' limit 21;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -145,4 +147,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-09 16:03:32
+-- Dump completed on 2022-01-09 18:31:42
