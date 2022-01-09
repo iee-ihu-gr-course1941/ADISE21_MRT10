@@ -25,8 +25,9 @@ DROP TABLE IF EXISTS `deck_board`;
 CREATE TABLE `deck_board` (
   `numcard` enum('1','2','3','4','5','6','7','8','9','10','K') NOT NULL,
   `symbcard` enum('H','D','C','S') NOT NULL,
-  `idcard` int(2) DEFAULT NULL,
-  `player` enum('P1','P2') DEFAULT NULL
+  `idcard` int(2) NOT NULL,
+  `player` enum('P1','P2') DEFAULT NULL,
+  PRIMARY KEY (`idcard`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -49,8 +50,9 @@ DROP TABLE IF EXISTS `deck_start`;
 CREATE TABLE `deck_start` (
   `numcard` enum('1','2','3','4','5','6','7','8','9','10','K') NOT NULL,
   `symbcard` enum('H','D','C','S') NOT NULL,
-  `idcard` int(2) DEFAULT NULL,
-  `player` enum('P1','P2') DEFAULT NULL
+  `idcard` int(2) NOT NULL,
+  `player` enum('P1','P2') DEFAULT NULL,
+  PRIMARY KEY (`idcard`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -85,6 +87,7 @@ CREATE TABLE `game_status` (
 
 LOCK TABLES `game_status` WRITE;
 /*!40000 ALTER TABLE `game_status` DISABLE KEYS */;
+INSERT INTO `game_status` VALUES ('not active',NULL,NULL,NULL),('not active',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `game_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -96,11 +99,11 @@ DROP TABLE IF EXISTS `players`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `players` (
-  `playerId` varchar(20) NOT NULL,
+  `username` varchar(20) DEFAULT 'null',
+  `player` enum('P1','P2') NOT NULL,
   `token` varchar(100) DEFAULT NULL,
   `last_action` timestamp NULL DEFAULT NULL,
-  `username` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`playerId`)
+  PRIMARY KEY (`player`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -110,6 +113,7 @@ CREATE TABLE `players` (
 
 LOCK TABLES `players` WRITE;
 /*!40000 ALTER TABLE `players` DISABLE KEYS */;
+INSERT INTO `players` VALUES (NULL,'P1',NULL,NULL),(NULL,'P2',NULL,NULL);
 /*!40000 ALTER TABLE `players` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,4 +151,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-09 18:31:42
+-- Dump completed on 2022-01-09 20:43:14
