@@ -24,7 +24,8 @@ DROP TABLE IF EXISTS `deck`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `deck` (
   `Numcard` tinyint(2) NOT NULL,
-  `Symbcard` varchar(1) NOT NULL
+  `Symbcard` varchar(1) NOT NULL,
+  `Player` varchar(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -34,7 +35,31 @@ CREATE TABLE `deck` (
 
 LOCK TABLES `deck` WRITE;
 /*!40000 ALTER TABLE `deck` DISABLE KEYS */;
+INSERT INTO `deck` VALUES (1,'C',''),(2,'C',''),(3,'C',''),(4,'C',''),(5,'C',''),(6,'C',''),(7,'C',''),(8,'C',''),(9,'C',''),(10,'C',''),(13,'C',''),(1,'S',''),(2,'S',''),(3,'S',''),(4,'S',''),(5,'S',''),(6,'S',''),(7,'S',''),(8,'S',''),(9,'S',''),(10,'S',''),(1,'H',''),(2,'H',''),(3,'H',''),(4,'H',''),(5,'H',''),(6,'H',''),(7,'H',''),(8,'H',''),(9,'H',''),(10,'H',''),(1,'D',''),(2,'D',''),(3,'D',''),(4,'D',''),(5,'D',''),(6,'D',''),(7,'D',''),(8,'D',''),(9,'D',''),(10,'D','');
 /*!40000 ALTER TABLE `deck` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `deck_field`
+--
+
+DROP TABLE IF EXISTS `deck_field`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `deck_field` (
+  `Numcard` tinyint(2) NOT NULL,
+  `Symbcard` varchar(1) NOT NULL,
+  `Player` varchar(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `deck_field`
+--
+
+LOCK TABLES `deck_field` WRITE;
+/*!40000 ALTER TABLE `deck_field` DISABLE KEYS */;
+/*!40000 ALTER TABLE `deck_field` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -94,4 +119,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-08 22:58:12
+-- Dump completed on 2022-01-09 11:34:42
