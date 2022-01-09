@@ -59,7 +59,6 @@ CREATE TABLE `deck_field` (
 
 LOCK TABLES `deck_field` WRITE;
 /*!40000 ALTER TABLE `deck_field` DISABLE KEYS */;
-INSERT INTO `deck_field` VALUES (4,'S','P2'),(5,'H','P2'),(4,'D','P2'),(5,'S','P2'),(2,'C','P2'),(2,'S','P2'),(4,'H','P2'),(1,'H','P2'),(7,'H','P2'),(10,'S','P2'),(3,'D','P2'),(5,'C','P2'),(3,'S','P2'),(9,'S','P2'),(6,'C','P2'),(10,'D','P2'),(3,'C','P2'),(13,'C','P2'),(2,'D','P2'),(10,'C','P2'),(6,'H','P2'),(1,'C','P1'),(2,'H','P1'),(8,'D','P1'),(9,'D','P1'),(6,'D','P1'),(7,'D','P1'),(1,'D','P1'),(6,'S','P1'),(4,'C','P1'),(9,'H','P1'),(3,'H','P1'),(8,'C','P1'),(5,'D','P1'),(8,'S','P1'),(8,'H','P1'),(1,'S','P1'),(9,'C','P1'),(10,'H','P1'),(7,'S','P1'),(7,'C','P1');
 /*!40000 ALTER TABLE `deck_field` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,6 +97,7 @@ CREATE TABLE `players` (
   `playerId` varchar(20) NOT NULL,
   `token` varchar(100) DEFAULT NULL,
   `last_action` timestamp NULL DEFAULT NULL,
+  `username` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`playerId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -110,6 +110,31 @@ LOCK TABLES `players` WRITE;
 /*!40000 ALTER TABLE `players` DISABLE KEYS */;
 /*!40000 ALTER TABLE `players` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'moutzouris'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `assign_cards_toplayers` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `assign_cards_toplayers`()
+BEGIN
+REPLACE INTO deck_field SELECT * FROM deck ORDER BY RAND();
+UPDATE deck_field SET Player='P1' ;
+UPDATE deck_field SET Player='P2' limit 21;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -120,4 +145,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-09 12:22:11
+-- Dump completed on 2022-01-09 16:03:32
