@@ -3,6 +3,7 @@
 require_once "../lib/dbconnect.php";
 require_once "../lib/board.php";
 require_once "../lib/game.php";
+require_once "../lib/users.php";
 
 $method = $_SERVER['REQUEST_METHOD'];
 $request = explode('/', trim($_SERVER['PATH_INFO'], '/'));
@@ -21,7 +22,7 @@ switch ($r = array_shift($request)) {
             break;
         break; // i exit
         }
-     case 'status':
+    case 'status':
         if(sizeof($request) == 0){
             handle_status($method);
         }else{
@@ -30,8 +31,8 @@ switch ($r = array_shift($request)) {
 
         break;
     
-     case 'players':
-        handle_player();
+     case 'players': handle_player($method,$request,$input);
+     //-> methodos PUT , poion paikti dialekse P1 h P2, apo input pairnoume ta dedomena pou edwse
         break;
 
      default:
@@ -54,7 +55,19 @@ function handle_idcard(){
 
     }
 
-function handle_player(){
+function handle_player($method,$p,$input){
+    switch($b = array_shift($p)){
+        case '':
+        case null:
+            break;
+        
+        case 'P1':
+        case 'P2': handle_user($method,$b,$input);
+            break;
+        default: header("HTTP/1.1 404 Not Found");
+                print json_encode(['errormesg'=>"Player $b not found."]);
+            break;
+   }
 
     }
 
