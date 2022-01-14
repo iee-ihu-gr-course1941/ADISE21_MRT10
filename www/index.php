@@ -9,15 +9,17 @@
 
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/bootstrap.min.css" rel="stylesheet"> 
-	<link href="css/mychess.css" rel="stylesheet">
-	<script src="bootstrap/jquery-3.2.1.min.js"></script>
+	<link href="css/mychess.css" rel="stylesheet"> 
+	<script src="bootstrap/jquery-3.2.1.min.js"></script> 
     <script src="bootstrap/bootstrap.min.js"></script>
 	<script src="js/mymoutzouris.js"></script>
     <script src="jquery-ui-1.12.1/jquery-ui.min.js"></script>
-	<link href="jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet">
+	<link href="jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet"> 
   </head>
 <body>
 <h1>MOUTZOURIS</h1>
+
+
 
 <br/>
 <div id='game_initializer'>
