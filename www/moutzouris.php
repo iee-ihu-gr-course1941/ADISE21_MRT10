@@ -10,7 +10,7 @@ require_once "../lib/users.php";
 $method = $_SERVER['REQUEST_METHOD'];
 $request = explode('/', trim($_SERVER['PATH_INFO'], '/'));
 
-
+print_r($request);
 if($method == "POST"){
  
     if(count($_POST)>0){
@@ -27,6 +27,11 @@ if($method == "POST"){
     $input = json_decode(file_get_contents('php://input'), true);
 }
 
+// if(isset($_SERVER['HTTP_X_TOKEN'])){
+//     $input['token'] = $_SERVER['HTTP_X_TOKEN'];
+// }
+//$who_plays['token'] = $input['player'];
+
 
 
 
@@ -37,10 +42,14 @@ if($method == "POST"){
 switch ($r = array_shift($request)) {
     case 'board':
         switch ($b = array_shift($request)) {
-            case '':
-            case null: handle_board($method,/*$input*/);
-            //case 'idcard': handle_idcard();
+            case '': handle_board($method);
+                break;
+            case null: handle_board($method);
+                break;
+            case 'idcard': handle_idcard($method,$request[0],$request[1],$input); //isws den xreiazetai $request[1]
             break;
+            case 'move':  move($request,$method);
+                break; 
         break; // i exit
         }
     case 'status':
@@ -53,16 +62,17 @@ switch ($r = array_shift($request)) {
     
     case 'players': handle_player($method,$request,$input);
      //-> methodos PUT , poion paikti dialekse P1 h P2, apo input pairnoume ta dedomena pou edwse
-        break;
-
+        break;   
     default:
         header("HTTP/1.1 404 Not Found");
         exit;
     }
 
-function handle_board($method,$input){
+
+
+function handle_board($method){
     if($method == 'GET'){
-        show_deck_board();
+        show_count_deck_board();
     }else if($method == 'POST'){
         reset_deck();
     }else{
@@ -71,8 +81,32 @@ function handle_board($method,$input){
 
 }
 
-function handle_idcard(){
+function move($request,$method){
+    //request 0 = P1
+    find_dublicates($request[0]);
+    //h find oponent epistrefei P2
+    find_dublicates(findOponent($request[0]));
+    if($request[0] == getTurn()){
+        if(check_ifEnded() == false){
+            $card = $request[1]-1;
+            beginMove($card,$request[0]);
+            changeTurn(findOponent($request[0]));
+        }else{
+            echo "game ended";
+        }
+    }else{
+        echo "not your turn, mate";
+    }
+    //request 0 = P1
+    find_dublicates($request[0]);
+    //h find oponent epistrefei P2
+    find_dublicates(findOponent($request[0]));
+    show_deck_board($request[0]);
+    show_count_deck_board();
+}
 
+function handle_idcard(){
+    
     }
 
 function handle_player($method,$p,$input){
@@ -80,7 +114,8 @@ function handle_player($method,$p,$input){
         // case '':
         // case null:
         //     break;
-        case 'P1': 
+        case 'P1': handle_user($method,$b,$input); 
+            break;
         case 'P2': handle_user($method,$b,$input);
             break;
         default: header("HTTP/1.1 404 Not Found");

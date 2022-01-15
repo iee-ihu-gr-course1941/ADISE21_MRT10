@@ -1,5 +1,6 @@
 <?php
 
+require_once "../lib/board.php";
 function handle_user($method,$b,$input){
     if($method == 'GET'){
         show_user($b);
@@ -59,6 +60,17 @@ function set_user($b,$input){
     $st2->execute();
 
     update_game_status();
+
+    $sql = 'select count(*) as count from players where username not like "" and username is not null';
+    $st = $mysqli->prepare($sql);
+	$st->execute();
+	$res = $st->get_result();
+    $r = $res->fetch_all(MYSQLI_ASSOC);
+    if($r[0]['count']>1){
+        reset_deck();
+    }
+
+
     $sql = 'select * from players where player=?';
     $st = $mysqli->prepare($sql);
     $st->bind_param('s',$b);
@@ -66,6 +78,7 @@ function set_user($b,$input){
 	$res = $st->get_result();
     header('Content-type: application/json');
 	print json_encode($res->fetch_all(MYSQLI_ASSOC), JSON_PRETTY_PRINT);
+
 
 }
 
