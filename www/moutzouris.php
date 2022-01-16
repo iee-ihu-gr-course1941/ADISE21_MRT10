@@ -6,11 +6,10 @@ require_once "../lib/game.php";
 require_once "../lib/users.php";
 
 
-
 $method = $_SERVER['REQUEST_METHOD'];
 $request = explode('/', trim($_SERVER['PATH_INFO'], '/'));
 
-print_r($request);
+//print_r($request);
 if($method == "POST"){
  
     if(count($_POST)>0){
@@ -43,14 +42,26 @@ if(isset($_SERVER['HTTP_X_TOKEN'])){
 switch ($r = array_shift($request)) {
     case 'board':
         switch ($b = array_shift($request)) {
-            case '': handle_board($method);
+            case '': handle_board($method,$player);
                 break;
-            case null: handle_board($method);
+            case null: handle_board($method,$player);
                 break;
             case 'idcard': handle_idcard($method,$request[0],$request[1],$input); //isws den xreiazetai $request[1]
             break;
             case 'move':  move($request,$player);
                 break; 
+            case 'reset': 
+                if(check_ifEnded()){
+                    resetEverything();
+                    print json_encode(['message'=>"Game has been reset"], JSON_PRETTY_PRINT);
+                }else{
+                    //echo "Game not Ended";
+                    print json_encode(['message'=>"Game not Ended"], JSON_PRETTY_PRINT);
+                    
+                }
+            break;
+            // case 'show': show_gen_deck_board();
+            // break;
         break; // i exit
         }
     case 'status':
@@ -71,9 +82,10 @@ switch ($r = array_shift($request)) {
 
 
 
-function handle_board($method){
+function handle_board($method,$player){
     if($method == 'GET'){
         show_count_deck_board();
+        show_gen_deck_board($player);
     }else if($method == 'POST'){
         reset_deck();
     }else{
@@ -91,9 +103,15 @@ function move($request,$player){
         find_dublicates(findOponent($player));
         if($player == getTurn()){
             if(check_ifEnded() == false){
+                
                 $card = $request[0]-1;
-                beginMove($card,$player);
-                changeTurn(findOponent($player));
+                if(getCountHand($player)>=$card){
+                    beginMove($card,$player);
+                    changeTurn(findOponent($player));
+                }else{
+                    //echo "Opponent has less cards on his hand";
+                    print json_encode(['message'=>"Opponent has less cards on his hand"]);
+                }
             }else{
                 echo "game ended";
             }
@@ -106,7 +124,8 @@ function move($request,$player){
         show_deck_board($player);
         show_count_deck_board();
         if(check_ifEnded()){
-            echo "Game ended, winner is : ".getWinner();
+            print json_encode(['message'=>"Game ended","winner" => getWinner()]);
+           game_ended();
         }
     }
     

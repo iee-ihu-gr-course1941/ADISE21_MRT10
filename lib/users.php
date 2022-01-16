@@ -68,6 +68,8 @@ function set_user($b,$input){
     $r = $res->fetch_all(MYSQLI_ASSOC);
     if($r[0]['count']>1){
         reset_deck();
+        find_dublicates($b);
+        find_dublicates(findOponent($b));
     }
 
 
@@ -91,7 +93,12 @@ function getP($token){
 	$st->execute();
 	$res = $st->get_result();
     $r = $res->fetch_all(MYSQLI_ASSOC);
-    return $r[0]['player'];
+    if(count($r)==0){
+        return null;
+    }else{
+
+        return $r[0]['player'];
+    }
 }
 
 ?>

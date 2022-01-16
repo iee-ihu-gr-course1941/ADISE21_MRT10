@@ -22,11 +22,12 @@ function reset_deck(){
 }
 
 
-function show_gen_deck_board(){
+function show_gen_deck_board($player){
     global $mysqli;
 	
-	$sql = 'select * from deck_board' ;
+	$sql = 'select * from deck_board where player = ?' ;
 	$st = $mysqli->prepare($sql);
+	$st->bind_param('s',$player);
 	$st->execute();
 	$res = $st->get_result();
 	header('Content-type: application/json');
@@ -151,7 +152,7 @@ function moveCard($idcard, $player){
 
 function changeTurn($player){
     global $mysqli;
-	$sql = 'UPDATE game_status SET p_turn = ?  ' ;
+	$sql = 'UPDATE game_status SET p_turn = ? ,  last_change = (SELECT NOW())' ;
 	$st = $mysqli->prepare($sql);
 	$st->bind_param('s',$player);
 	$st->execute();
@@ -179,11 +180,29 @@ function getWinner(){
 	return  findOponent($r[0]['player']);
 }
 
+function getCountHand($player){
+	global $mysqli;
+	$sql = 'select  count(*) as count FROM deck_board where player = ? ' ;
+	$st = $mysqli->prepare($sql);
+	$st->bind_param('s',$player);
+	$st->execute();
+	$res = $st->get_result();
+	$r = $res->fetch_all(MYSQLI_ASSOC);
+	return  $r[0]['count'];
+}
+
 function game_ended($winner){
 	global $mysqli;
-	$sql = 'UPDATE game_status SET status = "ended" , result = ?  ' ;
+	$sql = 'UPDATE game_status SET status = "ended" , result = ?  ,  last_change = (SELECT NOW()) ' ;
 	$st = $mysqli->prepare($sql);
 	$st->bind_param('s',$winner);
+	$st->execute();
+}
+
+function resetEverything(){
+	global $mysqli;
+	$sql = 'call reset_all()';
+	$st = $mysqli->prepare($sql);
 	$st->execute();
 }
 
