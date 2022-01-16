@@ -21,7 +21,6 @@ function reset_deck(){
 
 }
 
-
 function show_gen_deck_board($player){
     global $mysqli;
 	
@@ -44,7 +43,6 @@ function show_count_deck_board(){
 	header('Content-type: application/json');
 	print json_encode($res->fetch_all(MYSQLI_ASSOC), JSON_PRETTY_PRINT);
 }
-
 
 function find_dublicates($player){
 	global $mysqli;
@@ -94,8 +92,7 @@ function getTurn(){
 	
 }
 
-
-//count ksexwrista ta 2 xeria kai epistrefei mia bool true an enas ap tous dio den exei fulla h false an exoun kai oi 2
+//count ksexwrista ta 2 xeria kai epistrefei mia boolean true an enas ap tous dio den exei fulla h false an exoun kai oi 2
 function check_ifEnded(){
 	global $mysqli;
 	$sql = 'select  count(*) as count FROM deck_board where player = "P1" ' ;

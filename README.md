@@ -31,6 +31,23 @@ Response: (το count των παικτών το εμφανίζει γιατί �
     }
 ]
 
+Request:
+curl -X GET http://localhost/moutzouris/moutzouris.php/board
+Response: (Εμφανίζει πόσα χαρτιά έχει ο κάθε παίκτης και το status).
+[
+    {
+        "P1_cards": 8,
+        "P2_cards": 7
+    }
+][][
+    {
+        "status": "started",
+        "p_turn": "P1",
+        "result": null,
+        "last_change": null
+    }
+]
+
 
 Request:
 curl -X POST http://localhost/moutzouris/moutzouris.php/board/move/1 -H "X-Token: 95a6c75eaa0c6876fee5e5841d1f1b10"

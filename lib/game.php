@@ -48,7 +48,7 @@ function update_game_status(){
         case 1 : $new_status='initialized';break;
         case 2 : $new_status='started';
             if($status['p_turn']==null){
-                $new_turn = 'P1'; //make it rando
+                $new_turn = 'P1'; 
             }
             break;
     }

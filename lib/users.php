@@ -54,7 +54,7 @@ function set_user($b,$input){
         exit;
     }
 
-    $sql = 'update players set username=?, token=md5(CONCAT( ?,NOW())) where player=? '; //username = $username
+    $sql = 'update players set username=?, token=md5(CONCAT( ?,NOW())) where player=? '; 
     $st2 = $mysqli->prepare($sql);
     $st2->bind_param('sss',$username,$username,$b);
     $st2->execute();
@@ -72,7 +72,6 @@ function set_user($b,$input){
         find_dublicates(findOponent($b));
     }
 
-
     $sql = 'select * from players where player=?';
     $st = $mysqli->prepare($sql);
     $st->bind_param('s',$b);
@@ -80,7 +79,6 @@ function set_user($b,$input){
 	$res = $st->get_result();
     header('Content-type: application/json');
 	print json_encode($res->fetch_all(MYSQLI_ASSOC), JSON_PRETTY_PRINT);
-
 
 }
 

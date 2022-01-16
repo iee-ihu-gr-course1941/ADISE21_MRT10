@@ -5,7 +5,6 @@ require_once "../lib/board.php";
 require_once "../lib/game.php";
 require_once "../lib/users.php";
 
-
 $method = $_SERVER['REQUEST_METHOD'];
 $request = explode('/', trim($_SERVER['PATH_INFO'], '/'));
 
@@ -31,10 +30,6 @@ if(isset($_SERVER['HTTP_X_TOKEN'])){
     $player = getP($token);
 }
 
-
-
-
-
 // header("Content-Type: text/plain");
 // print "method = $method";
 // print "pathinfo =" . $_SERVER['PATH_INFO'];
@@ -46,8 +41,6 @@ switch ($r = array_shift($request)) {
                 break;
             case null: handle_board($method,$player);
                 break;
-            case 'idcard': handle_idcard($method,$request[0],$request[1],$input); //isws den xreiazetai $request[1]
-            break;
             case 'move':  move($request,$player);
                 break; 
             case 'reset': 
@@ -125,15 +118,12 @@ function move($request,$player){
         show_count_deck_board();
         if(check_ifEnded()){
             print json_encode(['message'=>"Game ended","winner" => getWinner()]);
-           game_ended();
+            game_ended(getWinner());
         }
     }
     
 }
 
-function handle_idcard(){
-    
-    }
 
 function handle_player($method,$p,$input){
     switch($b = array_shift($p)){
