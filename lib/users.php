@@ -82,4 +82,16 @@ function set_user($b,$input){
 
 }
 
+function getP($token){
+    
+    global $mysqli;
+    $sql = 'select player from players where token=?';
+    $st = $mysqli->prepare($sql);
+    $st->bind_param('s',$token);
+	$st->execute();
+	$res = $st->get_result();
+    $r = $res->fetch_all(MYSQLI_ASSOC);
+    return $r[0]['player'];
+}
+
 ?>

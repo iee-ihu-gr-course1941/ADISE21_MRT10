@@ -27,10 +27,11 @@ if($method == "POST"){
     $input = json_decode(file_get_contents('php://input'), true);
 }
 
-// if(isset($_SERVER['HTTP_X_TOKEN'])){
-//     $input['token'] = $_SERVER['HTTP_X_TOKEN'];
-// }
-//$who_plays['token'] = $input['player'];
+if(isset($_SERVER['HTTP_X_TOKEN'])){
+    $token = $_SERVER['HTTP_X_TOKEN'];
+    $player = getP($token);
+}
+
 
 
 
@@ -48,7 +49,7 @@ switch ($r = array_shift($request)) {
                 break;
             case 'idcard': handle_idcard($method,$request[0],$request[1],$input); //isws den xreiazetai $request[1]
             break;
-            case 'move':  move($request,$method);
+            case 'move':  move($request,$player);
                 break; 
         break; // i exit
         }
@@ -81,28 +82,34 @@ function handle_board($method){
 
 }
 
-function move($request,$method){
-    //request 0 = P1
-    find_dublicates($request[0]);
-    //h find oponent epistrefei P2
-    find_dublicates(findOponent($request[0]));
-    if($request[0] == getTurn()){
-        if(check_ifEnded() == false){
-            $card = $request[1]-1;
-            beginMove($card,$request[0]);
-            changeTurn(findOponent($request[0]));
-        }else{
-            echo "game ended";
-        }
+function move($request,$player){
+    if($player != "P1" && $player != "P2"){
+        echo "Please login first.";
     }else{
-        echo "not your turn, mate";
+        find_dublicates($player);
+        //h find oponent epistrefei P2
+        find_dublicates(findOponent($player));
+        if($player == getTurn()){
+            if(check_ifEnded() == false){
+                $card = $request[0]-1;
+                beginMove($card,$player);
+                changeTurn(findOponent($player));
+            }else{
+                echo "game ended";
+            }
+        }else{
+            echo "not your turn, mate";
+        }
+        find_dublicates($player);
+        //h find oponent epistrefei P2
+        find_dublicates(findOponent($player));
+        show_deck_board($player);
+        show_count_deck_board();
+        if(check_ifEnded()){
+            echo "Game ended, winner is : ".getWinner();
+        }
     }
-    //request 0 = P1
-    find_dublicates($request[0]);
-    //h find oponent epistrefei P2
-    find_dublicates(findOponent($request[0]));
-    show_deck_board($request[0]);
-    show_count_deck_board();
+    
 }
 
 function handle_idcard(){

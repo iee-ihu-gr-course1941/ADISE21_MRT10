@@ -169,4 +169,22 @@ function findOponent($player){
 	return  $r[0]['player'];
 }
 
+function getWinner(){
+	global $mysqli;
+	$sql = 'select  player FROM deck_board limit 1 ' ;
+	$st = $mysqli->prepare($sql);
+	$st->execute();
+	$res = $st->get_result();
+	$r = $res->fetch_all(MYSQLI_ASSOC);
+	return  findOponent($r[0]['player']);
+}
+
+function game_ended($winner){
+	global $mysqli;
+	$sql = 'UPDATE game_status SET status = "ended" , result = ?  ' ;
+	$st = $mysqli->prepare($sql);
+	$st->bind_param('s',$winner);
+	$st->execute();
+}
+
 ?>
